@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300&family=Yeon+Sung&display=swap");
+
+body {
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Noto Sans KR";
+  min-height: 100vh;
+  margin: 0px;
+}
+
+@media (min-width: 550px) {
+  .App {
+    width: 540px;
+  }
+}
+
+@media (max-width: 550px) {
+  .App {
+    width: 90vw;
+  }
+}
+
+#root {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.App {
+  min-height: 100vh;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* MyButton */
+.MyButton {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px 10px 15px;
+  font-size: 15px;
+
+  white-space: nowrap;
+  font-family: "Noto Sans KR";
+}
+
+.MyButton_default {
+  background-color: #ececec;
+  color: black;
+}
+
+.MyButton_positive {
+  background-color: #64c964;
+  color: white;
+}
+
+.MyButton_negative {
+  background-color: #fd565f;
+  color: white;
+}
+
+/* Home */
+header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e2e2e2;
+}
+
+header > div {
+  display: flex;
+}
+
+header .head_text {
+  width: 50%;
+  display: grid;
+  place-content: center;
+}
+
+header .head_text > input {
+  font-size: 15px;
+  font-family: "Noto Sans KR";
+
+  margin-top: 0px;
+  margin-bottom: 15px;
+
+  place-items: center;
+
+  background-color: #f5f2f2;
+  border: none;
+  border-radius: 5px;
+}
+
+header .head_text > h2 {
+  font-size: 25px;
+
+  margin-bottom: 10px;
+
+  place-items: center;
+}
+
+header .head_btn_left {
+  width: 25%;
+  justify-content: center;
+}
+header .head_btn_right {
+  width: 25%;
+  justify-content: center;
+}
+
+.item_adder {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item_adder input {
+  width: 85%;
+  height: 35px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f5f2f2;
+
+  font-family: "Noto Sans KR";
+}
+
+.item_adder > .btn_adder {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  width: 15%;
+}
+
+/* TodoList */
+.TodoList {
+  display: grid;
+  margin-top: 20px;
+  place-content: start;
+}
+
+/* TodoItem */
+.TodoItem input[type="checkbox"] {
+  -webkit-appearance: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  outline: none !important;
+  border: 1px solid #9999;
+  vertical-align: middle;
+}
+.TodoItem input[type="checkbox"]::before {
+  content: "\2713";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: scale(0) translate(-50%, -50%);
+  line-height: 1;
+}
+.TodoItem input[type="checkbox"]:checked {
+  background-color: #63aeff;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+.TodoItem input[type="checkbox"]:checked::before {
+  border-radius: 4px;
+  transform: scale(1) translate(-50%, -50%);
+}
+
+.TodoItem .todo-content-done {
+  margin-left: 5px;
+  color: #c4c4c4;
+}
+
+.TodoItem .todo-content {
+  margin-left: 5px;
+  color: #3c3c3c;
+}
