@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { TodoStateContext } from "../App";
+import { useContext, useRef, useState } from "react";
+import { TodoDispatchContext, TodoStateContext } from "../App";
 import MyButton from "../components/MyButton";
 import { getStringDate } from "../util/date";
 import TodoList from "./TodoList";
@@ -8,9 +8,20 @@ function Home() {
   const currDate = getStringDate(new Date()).slice(6);
 
   const todoList = useContext(TodoStateContext);
+  const { onCreate, onEdit, onDone } = useContext(TodoDispatchContext);
+  const [content, setContent] = useState(""); // 투두리스트 내용
+  const contentRef = useRef();
 
-  // 날짜 관리
+  // 작성 완료 함수
+  const handleSubmit = () => {
+    if (content.length < 1) {
+      contentRef.current.focus();
+      return;
+    }
 
+    onCreate(content);
+    console.log("submit");
+  };
   return (
     <div>
       <header>
@@ -36,9 +47,21 @@ function Home() {
         </div>
       </header>
       <div className="item_adder">
-        <input type="text" placeholder="할 일을 추가해보세요"></input>
+        <input
+          type="text"
+          placeholder="할 일을 추가해보세요"
+          ref={contentRef}
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        ></input>
         <div className="btn_adder">
-          <MyButton type={"positive"} text="추가"></MyButton>
+          <MyButton
+            type={"positive"}
+            text="추가"
+            onClick={handleSubmit}
+          ></MyButton>
         </div>
       </div>
 
