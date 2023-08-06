@@ -8,6 +8,7 @@ const reducer = (oldState, action) => {
     case "INIT": {
       return action.data;
     }
+
     case "CREATE": {
       const newItem = {
         ...action.data,
@@ -19,36 +20,54 @@ const reducer = (oldState, action) => {
     case "DONE": {
       newState = oldState.filter((it) => it.id !== action.data.id);
       newState = [...newState, { ...action.data }]; // 끝난 작업 맨 아래로
+      break;
+    }
 
+    case "REMOVE": {
+      newState = oldState.filter((it) => it.id !== action.id);
       break;
     }
 
     case "EDIT": {
+      console.log("수정 버튼 눌림");
+
+      newState = oldState.map((it) =>
+        it.id === action.data.id ? action.data : it
+      );
       break;
     }
 
     default:
       return oldState;
   }
+
+  localStorage.setItem("todo", JSON.stringify(newState));
   return newState;
 };
-
-// 임시 데이터
-const tempData = [
-  { id: 0, content: "장보러 가기", date: 1691134164701, isDone: false },
-  { id: 1, content: "과제하기", date: 1691161200000, isDone: false },
-];
 
 export const TodoStateContext = React.createContext(); // 데이터 공급
 export const TodoDispatchContext = React.createContext(); // 데이터 처리 함수 공급
 
 function App() {
+  const [data, dispatch] = useReducer(reducer, []);
+  const dataId = useRef(0);
+
+  // 첫 마운트 시에만 시행
   // todolist 데이터 관련 설정
   useEffect(() => {
-    dispatch({ type: "INIT", data: tempData });
+    const localData = localStorage.getItem("todo");
+
+    if (localData) {
+      const todoList = JSON.parse(localData).sort(
+        (a, b) => parseInt(b.id) - parseInt(a.id)
+      );
+
+      if (todoList.length >= 1) {
+        dataId.current = parseInt(todoList[0].id) + 1;
+        dispatch({ type: "INIT", data: todoList });
+      }
+    }
   }, []);
-  const [data, dispatch] = useReducer(reducer, []);
-  const dataId = useRef(2);
 
   // CREATE
   const onCreate = (content, curDate) => {
@@ -63,7 +82,7 @@ function App() {
     });
   };
 
-  // REMOVE(DONE)
+  // DONE & UNDO
   const onDone = (targetId, content, date, isDone) => {
     dispatch({
       type: "DONE",
@@ -76,6 +95,14 @@ function App() {
     });
   };
 
+  // REMOVE
+  const onRemove = (targetId) => {
+    dispatch({
+      type: "REMOVE",
+      id: targetId,
+    });
+  };
+
   // EDIT
   const onEdit = (targetId, content, date, isDone) => {
     dispatch({
@@ -83,7 +110,7 @@ function App() {
       data: {
         id: targetId,
         content: content,
-        date: new Date(date).getTime,
+        date: date,
         isDone: isDone,
       },
     });
@@ -91,7 +118,9 @@ function App() {
 
   return (
     <TodoStateContext.Provider value={data}>
-      <TodoDispatchContext.Provider value={{ onCreate, onEdit, onDone }}>
+      <TodoDispatchContext.Provider
+        value={{ onCreate, onEdit, onDone, onRemove }}
+      >
         <div className="App">
           <Home></Home>
         </div>

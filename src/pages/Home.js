@@ -37,23 +37,17 @@ function Home() {
         `${curDate.getFullYear()}-${
           curDate.getMonth() + 1
         }-${curDate.getDate()}`
-      );
+      ).getTime();
 
-      const endTime = new Date(
-        `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${
-          curDate.getDate() + 1
-        }`
-      );
+      const endTime = startTime + 24 * 60 * 60 * 1000;
 
       setData(
-        todoList.filter(
-          (it) => it.date >= startTime.getTime() && it.date < endTime.getTime()
-        )
+        todoList.filter((it) => it.date >= startTime && it.date < endTime)
       );
     }
   }, [todoList, curDate]);
 
-  const { onCreate, onEdit, onDone } = useContext(TodoDispatchContext);
+  const { onCreate } = useContext(TodoDispatchContext);
   const [content, setContent] = useState(""); // 작성한 투두리스트 내용
   const contentRef = useRef();
 
@@ -88,6 +82,7 @@ function Home() {
           <MyButton text={"다음"} onClick={increaseDay}></MyButton>
         </div>
       </header>
+
       <div className="item_adder">
         <input
           type="text"
@@ -107,7 +102,9 @@ function Home() {
         </div>
       </div>
 
-      <TodoList todoList={data} />
+      <div className="todo_container">
+        <TodoList todoList={data} />
+      </div>
     </div>
   );
 }

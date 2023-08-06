@@ -111,13 +111,12 @@ header .head_btn_right {
 .item_adder {
   margin-top: 15px;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .item_adder input {
-  width: 85%;
+  width: 90%;
   height: 35px;
+
   border: none;
   border-radius: 5px;
   background-color: #f5f2f2;
@@ -129,17 +128,29 @@ header .head_btn_right {
   display: flex;
   align-items: center;
   justify-content: end;
-  width: 15%;
+  width: 20%;
+}
+
+.todo_container {
+  width: 100%;
 }
 
 /* TodoList */
 .TodoList {
-  display: grid;
+  width: 100%;
   margin-top: 20px;
   place-content: start;
 }
 
 /* TodoItem */
+.TodoItem {
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .TodoItem input[type="checkbox"] {
   -webkit-appearance: none;
   -webkit-box-sizing: border-box;
@@ -179,4 +190,30 @@ header .head_btn_right {
 .TodoItem .todo-content {
   margin-left: 5px;
   color: #3c3c3c;
+}
+
+.TodoItem .item-text {
+  width: 80%;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  margin-right: 5px;
+}
+
+.TodoItem .item-text label {
+  font-size: 18px;
+}
+
+.TodoItem .item-button {
+  width: 20%;
+  margin-left: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.TodoItem .MyButton {
+  margin-right: 5px;
 }
