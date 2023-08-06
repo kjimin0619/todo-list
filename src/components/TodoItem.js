@@ -3,7 +3,6 @@ import { TodoDispatchContext } from "../App";
 import MyButton from "./MyButton";
 
 function TodoItem({ id, content, date, isDone }) {
-  console.log(id, content, date, isDone);
   const { onDone, onRemove, onEdit } = useContext(TodoDispatchContext);
   const type = isDone ? "todo-content-done" : "todo-content";
   const [isEdit, setIsEdit] = useState(false);
@@ -11,7 +10,7 @@ function TodoItem({ id, content, date, isDone }) {
 
   useEffect(() => {
     setContent(content);
-  }, [content]);
+  }, [content, id, date, isDone]);
 
   const editor = (
     <input
@@ -50,7 +49,6 @@ function TodoItem({ id, content, date, isDone }) {
         <MyButton
           text={"삭제"}
           onClick={() => {
-            console.log("삭제", id);
             onRemove(id);
           }}
           type="negative"
@@ -62,7 +60,7 @@ function TodoItem({ id, content, date, isDone }) {
 
 TodoItem.defaultProps = {
   id: 0,
-  content: "test todo",
+  content: "default",
   date: new Date(),
   isDone: false,
 };

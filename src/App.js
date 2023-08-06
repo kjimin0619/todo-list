@@ -29,8 +29,6 @@ const reducer = (oldState, action) => {
     }
 
     case "EDIT": {
-      console.log("수정 버튼 눌림");
-
       newState = oldState.map((it) =>
         it.id === action.data.id ? action.data : it
       );
@@ -40,7 +38,6 @@ const reducer = (oldState, action) => {
     default:
       return oldState;
   }
-
   localStorage.setItem("todo", JSON.stringify(newState));
   return newState;
 };

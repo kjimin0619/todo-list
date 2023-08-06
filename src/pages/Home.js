@@ -6,6 +6,7 @@ import TodoList from "../components/TodoList";
 function Home() {
   // 날짜 제어
   const [curDate, setCurDate] = useState(new Date());
+
   const year = curDate.getFullYear();
   const month = curDate.getMonth() + 1;
   const rMonth = month >= 10 ? month : "0" + `${month}`;
@@ -32,19 +33,13 @@ function Home() {
 
   // 투두리스트 업데이트 제어(날짜 필터링)
   useEffect(() => {
-    if (todoList.length >= 1) {
-      const startTime = new Date(
-        `${curDate.getFullYear()}-${
-          curDate.getMonth() + 1
-        }-${curDate.getDate()}`
-      ).getTime();
+    const startTime = new Date(
+      `${curDate.getFullYear()}-${curDate.getMonth() + 1}-${curDate.getDate()}`
+    ).getTime();
 
-      const endTime = startTime + 24 * 60 * 60 * 1000;
+    const endTime = startTime + 24 * 60 * 60 * 1000;
 
-      setData(
-        todoList.filter((it) => it.date >= startTime && it.date < endTime)
-      );
-    }
+    setData(todoList.filter((it) => it.date >= startTime && it.date < endTime));
   }, [todoList, curDate]);
 
   const { onCreate } = useContext(TodoDispatchContext);
